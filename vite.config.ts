@@ -9,4 +9,18 @@ export default defineConfig({
   },
   envPrefix: 'VITE_',
   envDir: '.',
+  server: {
+    proxy: {
+      '/api/groq': {
+        target: 'https://api.groq.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/groq/, '/openai/v1/chat/completions'),
+        configure: (proxy, _options) => {
+          proxy.on('proxyReq', (proxyReq, _req, _res) => {
+            proxyReq.setHeader('Authorization', `Bearer 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`);
+          });
+        },
+      },
+    },
+  },
 });
