@@ -1,9 +1,12 @@
 import { Groq } from 'groq-sdk';
 
+const isDevelopment = import.meta.env.DEV;
+const baseURL = isDevelopment ? '/api/groq' : 'https://api.groq.com';
+
 const groq = new Groq({
   apiKey: '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',
   dangerouslyAllowBrowser: true,
-  baseURL: '/api/groq'  // Use the proxied endpoint
+  baseURL: baseURL
 });
 
 export const generateContentFromAI = async (prompt: string): Promise<string> => {
